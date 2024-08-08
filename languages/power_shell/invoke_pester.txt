@@ -1,0 +1,14 @@
+. ..\power_shell\array_plus_array.ps1
+. .\functions\random_functions.ps1
+
+Invoke-Pester -Path .\SumOfPositive_Test.ps1
+Invoke-Pester -Path .\tests\SumOfPositive_Test.ps1
+Invoke-Pester -Path .\tests\array_plus_array_test.ps1
+
+Write-Verbose
+       -Verbose
+	   -Debug
+	   -PassThru
+
+PS C:\h_codewars\functions> . .\random_functions.ps1
+PS C:\h_codewars\functions> Get-Command Generate-RandomArray

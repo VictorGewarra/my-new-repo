@@ -1,0 +1,6 @@
+Remove-Module -Name Pester -AllVersions
+
+Import-Module -Name Pester -RequiredVersion 5.6.1
+Import-Module -Name Pester -RequiredVersion 3.4.0
+
+Remove-Item Function:\array_plus_array -ErrorAction SilentlyContinue
