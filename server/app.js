@@ -8,6 +8,7 @@ const indexRouter = require('./routes/index');
 const testsRouter = require('./routes/tests');
 const languagesRouter = require('./routes/languages');
 const userRouter = require('./routes/userRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 // Настройка статики для файлов React
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));  // Обслуживаем файлы React из каталога build
@@ -16,6 +17,8 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'build')));  // Об
 app.use('/api/tests', testsRouter);
 app.use('/api/languages', languagesRouter);
 app.use('/api/users', userRouter);
+// Use task routes
+app.use('/api/tasks', taskRoutes);
 
 // Обработка маршрутов, которые не являются API-запросами
 app.get('*', (req, res) => {

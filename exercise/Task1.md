@@ -5,3 +5,5 @@ Write a PowerShell function that takes an array of integers and returns the sum 
 
 ## Difficulty
 Easy
+
+## arrays
