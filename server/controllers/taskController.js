@@ -1,36 +1,55 @@
-// controllers/taskController.js
 const fs = require('fs');
 const path = require('path');
 
-// Define the base directory
-const baseDir = 'C:/hodewars/hreact/exercise';
+const baseDir = path.join(__dirname, '..', '..', 'exercise');
 
-// Helper function to read tasks from a directory
-const readTasksFromDirectory = (dir) => {
-    const filePath = path.join(baseDir, dir, 'tasks.json');
+// Вспомогательная функция для чтения задач из файла
+const readTasksFromFile = (filePath) => {
+    console.log('Reading file from path:', filePath);  // Логирование пути к файлу
     if (fs.existsSync(filePath)) {
-        const tasks = fs.readFileSync(filePath, 'utf-8');
-        return JSON.parse(tasks);
-    }
-    return [];
-};
-
-// Controller to get tasks by category
-const getTasksByCategory = (req, res) => {
-    const { category } = req.params;
-    const tasks = readTasksFromDirectory(category);
-    res.json(tasks);
-};
-
-// Controller to get task details
-const getTaskDetails = (req, res) => {
-    const { category, taskId } = req.params;
-    const tasks = readTasksFromDirectory(category);
-    const task = tasks.find(task => task.id === taskId);
-    if (task) {
-        res.json(task);
+        try {
+            const data = fs.readFileSync(filePath, 'utf-8');
+            return JSON.parse(data);
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            return { tasks: [] }; // Возвращаем пустой объект в случае ошибки
+        }
     } else {
-        res.status(404).json({ message: 'Task not found' });
+        console.error('File not found:', filePath);  // Логирование отсутствия файла
+        return { tasks: [] }; // Возвращаем пустой объект, если файл не найден
+    }
+};
+
+// Контроллер для получения задач по категории
+const getTasksByCategory = (req, res) => {
+    try {
+        const { category } = req.params;  // Извлечение параметра категории
+        const filePath = path.join(baseDir, `${category}.json`);
+        console.log('File path for tasks by category:', filePath);  // Логирование пути к файлу
+        const { tasks } = readTasksFromFile(filePath);
+        res.json({ tasks });
+    } catch (error) {
+        console.error('Error in getTasksByCategory:', error);  // Логирование ошибок
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+// Контроллер для получения деталей задачи
+const getTaskDetails = (req, res) => {
+    try {
+        const { category, taskId } = req.params;  // Извлечение параметров категории и задачи
+        const filePath = path.join(baseDir, `${category}.json`);
+        console.log('File path for task details:', filePath);  // Логирование пути к файлу
+        const { tasks } = readTasksFromFile(filePath);
+        const task = tasks.find(task => task.id === taskId);
+        if (task) {
+            res.json(task);
+        } else {
+            res.status(404).json({ message: 'Task not found' });
+        }
+    } catch (error) {
+        console.error('Error in getTaskDetails:', error);  // Логирование ошибок
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 };
 
@@ -38,3 +57,5 @@ module.exports = {
     getTasksByCategory,
     getTaskDetails
 };
+
+
