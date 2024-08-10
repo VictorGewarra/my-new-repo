@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "name": "Array Sorting",
+      "description": "Sort an array of integers in ascending order.",
+      "tests": [
+        {
+          "input": "[3, 1, 2]",
+          "output": "[1, 2, 3]"
+        },
+        {
+          "input": "[5, 4, 2, 3]",
+          "output": "[2, 3, 4, 5]"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Find Maximum",
+      "description": "Find the maximum value in an array.",
+      "tests": [
+        {
+          "input": "[3, 1, 2]",
+          "output": "3"
+        },
+        {
+          "input": "[5, 4, 2, 3]",
+          "output": "5"
+        }
+      ]
+    }
+  ]
+}
